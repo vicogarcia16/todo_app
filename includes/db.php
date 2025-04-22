@@ -4,6 +4,7 @@ require_once __DIR__ . '/Config.php';
 
 use App\Config;
 use Dotenv\Dotenv;
+use RedBeanPHP\R;
 
 // Carga el archivo .env si existe
 if (file_exists(__DIR__ . '/../.env')) {
@@ -19,9 +20,15 @@ try {
     $driver = Config::get('DB_DRIVER', 'pgsql');
     $port = Config::get('DB_PORT', '5432');
 
-    $pdo = new PDO("$driver:host=$host;port=$port;dbname=$dbname", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dsn = "$driver:host=$host;port=$port;dbname=$dbname";
+    R::setup($dsn, $user, $pass);
+
+    R::freeze(true);
 } catch (Exception $e) {
     die("Error: " . $e->getMessage());
+}
+
+if (!R::testConnection()) {
+    die('No se puede conectar a la base de datos');
 }
 ?>
