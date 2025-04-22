@@ -1,25 +1,20 @@
-# Imagen base con PHP y Apache
+# Imagen base
 FROM php:8.2-apache
 
-# Habilita extensiones necesarias
+# Instala extensiones necesarias (pdo, pdo_mysql, etc.)
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Instala Composer desde una imagen oficial
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Instala Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Establece el directorio de trabajo
 WORKDIR /var/www/html
 
-# Copia solo composer.json y composer.lock primero (mejora el caché de docker)
-COPY composer.json composer.lock ./
-
-# Ahora copia todo lo demás
+# Copia los archivos de la app
 COPY . .
 
-# Da permisos al proyecto
-# RUN composer install --no-interaction --no-dev --optimize-autoloader
+# Ejecuta Composer para instalar dependencias
+RUN composer install --no-interaction --no-dev --optimize-autoloader
 
-RUN chown -R www-data:www-data /var/www/html
-
-# Expone el puerto 80
-EXPOSE 80
+# Habilita mod_rewrite si es necesario
+RUN a2enmod rewrite
