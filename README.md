@@ -8,7 +8,7 @@ Esta es una aplicación de lista de tareas simple desarrollada en PHP con una ba
 
 - **PHP**: Lenguaje principal para el backend.
 - **PostgreSQL**: Base de datos para almacenar los usuarios y las tareas.
-- **PDO**: Para interactuar con la base de datos de manera segura.
+- **RedBeanPHP**: Para interactuar con la base de datos como ORM de manera segura.
 - **HTML/CSS/Bootstrap**: Frontend para la interfaz de usuario.
 
 ## Características
