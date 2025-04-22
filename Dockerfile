@@ -17,7 +17,7 @@ COPY composer.json composer.lock ./
 COPY . .
 
 # Da permisos al proyecto
-RUN composer install --no-interaction --no-dev --optimize-autoloader
+# RUN composer install --no-interaction --no-dev --optimize-autoloader
 
 RUN chown -R www-data:www-data /var/www/html
 
