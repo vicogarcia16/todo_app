@@ -2,7 +2,7 @@
 
 <footer class="bg-dark text-center text-white py-3">
   <div class="container">
-    &copy; <?= date('Y') ?> To‑Do App
+    &copy; <?= date('Y') ?> To‑Do App by <a href="https://github.com/vicogarcia16" class="link-light">vicogarcia16</a>
   </div>
 </footer>
 
