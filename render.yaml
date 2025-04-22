@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: todo_app
+    env: php
+    plan: free
+    buildCommand: |
+      # Instala Composer
+      curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      
+      # Instala las dependencias de PHP
+      composer install --no-dev --optimize-autoloader
+      
+      # Habilita mod_rewrite (opcional)
+      a2enmod rewrite
+    startCommand: |
+      # Inicia el servidor Apache
+      apache2-foreground
+    envVars:
+      - key: APP_ENV
+        value: production
+    routes:
+      - path: /
+        target: /
