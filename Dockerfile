@@ -13,13 +13,12 @@ WORKDIR /var/www/html
 # Copia solo composer.json y composer.lock primero (mejora el caché de docker)
 COPY composer.json composer.lock ./
 
-# Ejecuta composer install aquí (antes de copiar todo por completo)
-RUN composer install --no-interaction --no-dev --optimize-autoloader
-
 # Ahora copia todo lo demás
 COPY . .
 
 # Da permisos al proyecto
+RUN composer install --no-interaction --no-dev --optimize-autoloader
+
 RUN chown -R www-data:www-data /var/www/html
 
 # Expone el puerto 80
