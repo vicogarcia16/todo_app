@@ -1,11 +1,13 @@
 # Imagen base con PHP y Apache
 FROM php:8.2-apache
 
-# Instala extensiones de PHP necesarias
-RUN docker-php-ext-install pdo pdo_pgsql
+# Instala las dependencias necesarias para PostgreSQL
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
 # Instala herramientas adicionales (opcional pero útil)
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
     git \
     unzip \
     libzip-dev \
