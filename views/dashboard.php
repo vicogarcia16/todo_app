@@ -1,19 +1,20 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/tasks.php';
+require_once __DIR__ . '/../includes/flash.php';
 requireAuth();
 
-$error   = '';
-$success = '';
 $userId  = $_SESSION['user_id'];
+$error   = getFlash('error');
+$success = getFlash('success');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $title = trim($_POST['new_task'] ?? '');
   if ($title === '') {
-    $error = 'Please enter a task.';
+    setFlash('error', 'Please enter a task.');
   } else {
     createTask($userId, $title);
-    $success = 'Created new task.';
+    setFlash('success', 'Created new task.');
   }
 }
 

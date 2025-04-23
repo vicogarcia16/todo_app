@@ -10,7 +10,7 @@ class Config
             if ($default !== null) {
                 return $default;
             }
-            throw new \Exception("La variable de entorno '{$key}' no está definida.");
+            throw new \Exception("Enviroment variable '{$key}' is not set.");
         }
 
         return $_ENV[$key];

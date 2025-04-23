@@ -6,7 +6,6 @@ use App\Config;
 use Dotenv\Dotenv;
 use RedBeanPHP\R;
 
-// Carga el archivo .env si existe
 if (file_exists(__DIR__ . '/../.env')) {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
@@ -26,9 +25,5 @@ try {
     R::freeze(true);
 } catch (Exception $e) {
     die("Error: " . $e->getMessage());
-}
-
-if (!R::testConnection()) {
-    die('No se puede conectar a la base de datos');
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/flash.php';
 
-// Si ya está logueado, redirige al dashboard
 if (!empty($_SESSION['user_id'])) {
     header('Location: dashboard.php');
     exit;
@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $res = registerUser($username, $password);
         if ($res['success']) {
+            setFlash('success', 'User registered successfully.');
             header('Location: login.php');
             exit;
         }
@@ -44,17 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST" novalidate>
           <div class="mb-2">
             <label for="username" class="form-label form-label-md">User</label>
-            <input type="text" id="username" name="username"
+            <input type="text" id="username" name="username" autocomplete="username"
                    class="form-control form-control-md bg-dark text-white" required>
           </div>
           <div class="mb-2">
             <label for="password" class="form-label form-label-md">Password</label>
-            <input type="password" id="password" name="password"
+            <input type="password" id="password" name="password" autocomplete="new-password"
                    class="form-control form-control-md bg-dark text-white" required>
           </div>
           <div class="mb-3">
             <label for="confirm" class="form-label form-label-md">Confirm Password</label>
-            <input type="password" id="confirm" name="confirm"
+            <input type="password" id="confirm" name="confirm" autocomplete="new-password"
                    class="form-control form-control-md bg-dark text-white" required>
           </div>
           <button type="submit" class="btn btn-primary btn-md w-100">Submit</button>

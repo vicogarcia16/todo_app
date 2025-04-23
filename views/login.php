@@ -1,22 +1,28 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/flash.php';
 
 if (!empty($_SESSION['user_id'])) {
     header('Location: dashboard.php');
     exit;
 }
 
-$error = '';
+$error = getFlash('error');
+$success = getFlash('success');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $res = loginUser($username, $password);
     if ($res['success']) {
+        setFlash('success', 'Login successful.');
         header('Location: dashboard.php');
         exit;
     }
-    $error = $res['message'];
+    setFlash('error', $res['message']);
+    header('Location: login.php');
+    exit;
 }
 ?>
 
@@ -30,6 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
+    <?php if ($success): ?>
+      <div id="success-notification" class="alert alert-success alert-dismissible fade show" role="alert">
+          <?= htmlspecialchars($success) ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <?php endif; ?>
     <div class="card bg-secondary text-white mb-3">
       <div class="card-body">
         <h4 class="card-title text-center mb-2">Login</h4>
@@ -38,13 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="mb-3">
             <label for="username" class="form-label">User</label>
             <input type="text" id="username" name="username"
-                   class="form-control bg-dark text-white" required autofocus>
+                   class="form-control bg-dark text-white" autocomplete="username" 
+                   required autofocus>
           </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" id="password" name="password"
-                   class="form-control bg-dark text-white" required>
+                   class="form-control bg-dark text-white" autocomplete="current-password" required>
           </div>
 
           <button type="submit" class="btn btn-primary btn-md w-100">Submit</button>
