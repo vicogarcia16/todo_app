@@ -22,6 +22,6 @@ crossorigin="anonymous"></script>
       successNotification.classList.add('fade');
       setTimeout(() => successNotification.remove(), 300);
     }
-  }, 5000);
+  }, 4000);
 </script>
 </html>

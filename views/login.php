@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $res = loginUser($username, $password);
     if ($res['success']) {
-        setFlash('success', 'Login successful.');
         header('Location: dashboard.php');
         exit;
     }
@@ -24,23 +23,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: login.php');
     exit;
 }
+
 ?>
 
 <?php include_once __DIR__ . '/../includes/header.php'; ?>
 
 <div class="row justify-content-center">
   <div class="col-md-4">
+  <?php if ($success): ?>
+      <div id="success-notification" class="alert alert-success alert-dismissible fade show" role="alert">
+          <?= htmlspecialchars($success) ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <?php endif; ?>
     <?php if ($error): ?>
         <div id="error-notification" class="alert alert-danger alert-dismissible fade show" role="alert">
         <?= htmlspecialchars($error) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    <?php endif; ?>
-    <?php if ($success): ?>
-      <div id="success-notification" class="alert alert-success alert-dismissible fade show" role="alert">
-          <?= htmlspecialchars($success) ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
     <?php endif; ?>
     <div class="card bg-secondary text-white mb-3">
       <div class="card-body">
