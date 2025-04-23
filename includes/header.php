@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.5/dist/darkly/bootstrap.min.css" rel="stylesheet">
   <title>To‑Do App</title>
 </head>
